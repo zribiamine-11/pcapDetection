@@ -1,5 +1,6 @@
 import subprocess
 from datetime import datetime, timezone
+from rules.rule_engine import analyze_packet, analyze_conversation
 
 
 # ---------------------------------------------------------------------------
@@ -113,48 +114,42 @@ def extract_packets(filepath):
             udp_dport
         )
         packet_time = float(ts) if ts else None
-        
 
+        packet = {
+        "timestamp": packet_time,
+        "captured": epoch_to_iso(packet_time),
 
-        packets.append({
+        "src_ip": src_ip,
+        "dst_ip": dst_ip,
 
-            "timestamp": packet_time,
-            "captured": epoch_to_iso(packet_time),
-            
+        "length": int(length) if length else 0,
 
+        "protocol": protocol,
 
-            "src_ip": src_ip,
+        "src_port": tcp_sport or udp_sport or None,
+        "dst_port": tcp_dport or udp_dport or None,
 
-            "dst_ip": dst_ip,
+        "default_port": is_default_port(
+        protocol,
+        tcp_sport or udp_sport,
+        tcp_dport or udp_dport
+        ),
 
-            "length": int(length) if length else 0,
+        "tcp_syn": flag_to_bool(tcp_flags, 0x02),
+        "tcp_ack": flag_to_bool(tcp_flags, 0x10),
+        "tcp_syn_ack": (
+        flag_to_bool(tcp_flags, 0x02)
+        and flag_to_bool(tcp_flags, 0x10)
+    ),
+        "tcp_stream": (
+        int(tcp_stream)
+        if tcp_stream != ""
+        else None
+    )
 
-            "protocol": protocol,
-
-
-            "src_port": tcp_sport or udp_sport or None,
-
-            "dst_port": tcp_dport or udp_dport or None,
-            "default_port": is_default_port(
-                protocol,
-                tcp_sport or udp_sport,
-                tcp_dport or udp_dport
-                ),
-            
-
-
-            # TCP flags decoding
-            "tcp_syn": flag_to_bool(tcp_flags, 0x02),
-
-            "tcp_ack": flag_to_bool(tcp_flags, 0x10),
-
-
-            "tcp_stream":
-                int(tcp_stream)
-                if tcp_stream != ""
-                else None,
-
-        })
+}
+        packet["alerts"] = analyze_packet(packet)
+        packets.append(packet)
         
 
 
@@ -187,9 +182,7 @@ def detect_protocol(protocols, tcp_sport, tcp_dport, udp_sport, udp_dport):
 
 
 
-# ===========================================================
-# ADD THIS PART HERE
-# ===========================================================
+
 
 DEFAULT_PORTS = {
     "HTTP": {80},
@@ -304,34 +297,101 @@ def epoch_to_iso(ts):
 
 def build_conversation_summary(convo):
     packets = convo["packets"]
-    timestamps = [p["timestamp"] for p in packets if p["timestamp"] is not None]
+
+    timestamps = [
+        p["timestamp"]
+        for p in packets
+        if p["timestamp"] is not None
+    ]
 
     start_ts = min(timestamps) if timestamps else None
     end_ts = max(timestamps) if timestamps else None
 
-    handshake_streams = check_handshake(packets)
-    any_tcp = len(handshake_streams) > 0
-    all_completed = all(s["completed"] for s in handshake_streams.values()) if any_tcp else None
-    any_completed = any(s["completed"] for s in handshake_streams.values()) if any_tcp else None
 
-    return {
+    # Check TCP streams and handshake
+    handshake_streams = check_handshake(packets)
+
+    any_tcp = len(handshake_streams) > 0
+
+    all_completed = (
+        all(s["completed"] for s in handshake_streams.values())
+        if any_tcp
+        else None
+    )
+
+    any_completed = (
+        any(s["completed"] for s in handshake_streams.values())
+        if any_tcp
+        else None
+    )
+
+
+    # Data needed for conversation-level rules
+    conversation_data = {
         "ip_a": convo["ip_a"],
         "ip_b": convo["ip_b"],
-        "total_packets": len(packets),
-        "total_bytes": sum(p["length"] for p in packets),
-        "protocols_seen": sorted(set(p["protocol"] for p in packets)),
-        "start_time_iso": epoch_to_iso(start_ts),
-        "end_time_iso": epoch_to_iso(end_ts),
-        "duration_seconds": (end_ts - start_ts) if start_ts is not None and end_ts is not None else None,
+
         "handshake": {
             "has_tcp": any_tcp,
             "all_streams_completed": all_completed,
             "any_stream_completed": any_completed,
             "streams": handshake_streams,
         },
-        "packets": packets,
+
+        "packets": packets
     }
 
+
+    # Run TCP/conversation rules
+    conversation_alerts = analyze_conversation(
+        conversation_data
+    )
+
+
+    return {
+
+        "ip_a": convo["ip_a"],
+
+        "ip_b": convo["ip_b"],
+
+        "total_packets": len(packets),
+
+        "total_bytes": sum(
+            p["length"] for p in packets
+        ),
+
+        "protocols_seen": sorted(
+            set(p["protocol"] for p in packets)
+        ),
+
+        "start_time_iso": epoch_to_iso(start_ts),
+
+        "end_time_iso": epoch_to_iso(end_ts),
+
+        "duration_seconds": (
+            end_ts - start_ts
+            if start_ts is not None and end_ts is not None
+            else None
+        ),
+
+
+        "handshake": {
+            "has_tcp": any_tcp,
+
+            "all_streams_completed": all_completed,
+
+            "any_stream_completed": any_completed,
+
+            "streams": handshake_streams,
+        },
+
+
+        # New field for conversation-level anomalies
+        "alerts": conversation_alerts,
+
+
+        "packets": packets,
+    }
 
 def parse_pcap(filepath):
     packets = extract_packets(filepath)
