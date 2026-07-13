@@ -7,7 +7,10 @@ from rules.dhcp_rules import check_dhcp_rules
 from rules.http_rules import check_http_rules
 from rules.https_rules import check_https_rules
 from rules.ftp_rules import check_ftp_rules
-from rules.ssh_rules import check_ssh_rules
+from rules.ssh_rules import (
+    check_ssh_rules,
+    check_ssh_bruteforce
+)
 
 
 
@@ -47,6 +50,9 @@ def analyze_conversation(conversation):
 
     alerts.extend(
         check_tcp_rules(conversation)
+    )
+    alerts.extend(
+        check_ssh_bruteforce(conversation)
     )
 
 
