@@ -1,6 +1,7 @@
 import subprocess
 from datetime import datetime, timezone
 from rules.rule_engine import analyze_packet, analyze_conversation
+from rules.dhcp_rules import check_multiple_dhcp_servers
 
 
 # ---------------------------------------------------------------------------
@@ -35,6 +36,8 @@ def extract_packets(filepath):
         "-e", "udp.dstport",
         "-e", "tcp.flags",
         "-e", "tcp.stream",
+        "-e", "eth.src",
+        "-e", "eth.dst",
     ]
 
     result = subprocess.run(
@@ -52,7 +55,7 @@ def extract_packets(filepath):
 
     lines = result.stdout.strip().split("\n")
 
-    NUM_FIELDS = 11
+    NUM_FIELDS = 13
 
 
     def flag_to_bool(flags, bit):
@@ -97,7 +100,9 @@ def extract_packets(filepath):
             udp_sport,
             udp_dport,
             tcp_flags,
-            tcp_stream
+            tcp_stream,
+            src_mac,
+            dst_mac
 
         ) = fields[:NUM_FIELDS]
 
@@ -121,6 +126,8 @@ def extract_packets(filepath):
 
         "src_ip": src_ip,
         "dst_ip": dst_ip,
+        "src_mac": src_mac,
+        "dst_mac": dst_mac,
 
         "length": int(length) if length else 0,
 
@@ -400,9 +407,14 @@ def parse_pcap(filepath):
     conversations = [build_conversation_summary(convo) for convo in grouped.values()]
     # sort biggest conversations first, often the most "interesting"
     conversations.sort(key=lambda c: c["total_packets"], reverse=True)
+    # Capture-level rules
+    capture_alerts = check_multiple_dhcp_servers(
+        conversations
+    )
 
     return {
         "total_packets": len(packets),
         "total_conversations": len(conversations),
+        "capture_alerts": capture_alerts,
         "conversations": conversations,
     }
