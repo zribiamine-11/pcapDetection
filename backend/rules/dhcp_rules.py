@@ -75,3 +75,58 @@ def check_multiple_dhcp_servers(conversations):
 
 
     return alerts
+
+def check_excessive_dhcp_discover(conversations):
+
+    alerts = []
+
+    discover_counter = {}
+
+
+    for conversation in conversations:
+
+        if "DHCP" not in conversation["protocols_seen"]:
+            continue
+
+
+        for packet in conversation["packets"]:
+
+            if packet["protocol"] != "DHCP":
+                continue
+
+
+            if packet.get("dhcp_type") == "1":
+
+                mac = packet.get("src_mac")
+
+                if mac:
+
+                    if mac not in discover_counter:
+                        discover_counter[mac] = 0
+
+                    discover_counter[mac] += 1
+
+
+
+    for mac, count in discover_counter.items():
+
+        if count > 10:
+
+            alerts.append({
+
+                "rule_id": "DHCP-003",
+
+                "severity": "Medium",
+
+                "title": "Excessive DHCP Discovery Requests",
+
+                "description": (
+                    f"MAC address {mac} sent "
+                    f"{count} DHCP Discover packets. "
+                    "Possible DHCP starvation or abnormal DHCP client behavior."
+                )
+
+            })
+
+
+    return alerts

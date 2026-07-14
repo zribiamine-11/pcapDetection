@@ -5,7 +5,8 @@ from rules.icmp_rules import check_icmp_rules
 from rules.dns_rules import check_dns_rules
 from rules.dhcp_rules import (
     check_dhcp_rules,
-    check_multiple_dhcp_servers
+    check_multiple_dhcp_servers,
+    check_excessive_dhcp_discover
 )
 from rules.http_rules import check_http_rules
 from rules.https_rules import check_https_rules
@@ -69,6 +70,11 @@ def analyze_capture(conversations):
 
     alerts.extend(
         check_multiple_dhcp_servers(conversations)
+    )
+
+
+    alerts.extend(
+        check_excessive_dhcp_discover(conversations)
     )
 
 

@@ -1,8 +1,10 @@
 import subprocess
 from datetime import datetime, timezone
-from rules.rule_engine import analyze_packet, analyze_conversation
-from rules.dhcp_rules import check_multiple_dhcp_servers
-
+from rules.rule_engine import (
+    analyze_packet,
+    analyze_conversation,
+    analyze_capture
+)
 
 # ---------------------------------------------------------------------------
 # STEP 1: Extract raw packets from the pcap using tshark
@@ -38,6 +40,7 @@ def extract_packets(filepath):
         "-e", "tcp.stream",
         "-e", "eth.src",
         "-e", "eth.dst",
+        "-e", "bootp.option.dhcp",
     ]
 
     result = subprocess.run(
@@ -55,7 +58,7 @@ def extract_packets(filepath):
 
     lines = result.stdout.strip().split("\n")
 
-    NUM_FIELDS = 13
+    NUM_FIELDS = 14
 
 
     def flag_to_bool(flags, bit):
@@ -102,7 +105,8 @@ def extract_packets(filepath):
             tcp_flags,
             tcp_stream,
             src_mac,
-            dst_mac
+            dst_mac,
+            dhcp_type
 
         ) = fields[:NUM_FIELDS]
 
@@ -141,6 +145,7 @@ def extract_packets(filepath):
         tcp_sport or udp_sport,
         tcp_dport or udp_dport
         ),
+        "dhcp_type": dhcp_type,
 
         "tcp_syn": flag_to_bool(tcp_flags, 0x02),
         "tcp_ack": flag_to_bool(tcp_flags, 0x10),
@@ -408,9 +413,9 @@ def parse_pcap(filepath):
     # sort biggest conversations first, often the most "interesting"
     conversations.sort(key=lambda c: c["total_packets"], reverse=True)
     # Capture-level rules
-    capture_alerts = check_multiple_dhcp_servers(
-        conversations
-    )
+    capture_alerts = analyze_capture(
+    conversations
+)
 
     return {
         "total_packets": len(packets),

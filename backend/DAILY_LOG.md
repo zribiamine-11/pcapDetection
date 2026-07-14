@@ -6,3 +6,8 @@ Next steps: testing the shh rule
 date: 14/07/2026
 tasks: adding the dhcp multiple servers rule
 next step : adding the Excessive DHCP Discover messages rule 
+
+
+date: 14/07/2026
+tasks: adding the the Excessive DHCP Discover messages rule 
+ next step: adding other dns ruls
