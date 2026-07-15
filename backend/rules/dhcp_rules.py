@@ -1,3 +1,5 @@
+DHCP_WINDOW_SIZE = 10          # seconds
+DHCP_DISCOVER_THRESHOLD = 10   # Discover packets
 def check_dhcp_rules(packet):
 
     alerts = []
@@ -76,57 +78,84 @@ def check_multiple_dhcp_servers(conversations):
 
     return alerts
 
-def check_excessive_dhcp_discover(conversations):
+def check_excessive_dhcp_discover(conversation):
 
     alerts = []
 
-    discover_counter = {}
+    # Ignore non DHCP conversations
+    if "DHCP" not in conversation["protocols_seen"]:
+        return alerts
 
 
-    for conversation in conversations:
+    # Get only DHCP Discover packets
+    discover_packets = []
 
-        if "DHCP" not in conversation["protocols_seen"]:
+    for packet in conversation["packets"]:
+
+        if packet["protocol"] != "DHCP":
             continue
 
 
-        for packet in conversation["packets"]:
+        if packet.get("dhcp_type") == "1":
 
-            if packet["protocol"] != "DHCP":
-                continue
-
-
-            if packet.get("dhcp_type") == "1":
-
-                mac = packet.get("src_mac")
-
-                if mac:
-
-                    if mac not in discover_counter:
-                        discover_counter[mac] = 0
-
-                    discover_counter[mac] += 1
+            discover_packets.append(packet)
 
 
 
-    for mac, count in discover_counter.items():
+    if len(discover_packets) == 0:
+        return alerts
 
-        if count > 10:
+
+
+    # Sliding window
+    for packet in discover_packets:
+
+        window_start = packet["timestamp"]
+
+        window_end = (
+            window_start + DHCP_WINDOW_SIZE
+        )
+
+
+        discover_count = 0
+
+
+        for discover in discover_packets:
+
+            if (
+                window_start
+                <= discover["timestamp"]
+                <= window_end
+            ):
+                discover_count += 1
+
+
+
+        if discover_count > DHCP_DISCOVER_THRESHOLD:
+
+
+            mac = packet.get("src_mac")
+
 
             alerts.append({
 
                 "rule_id": "DHCP-003",
 
-                "severity": "Medium",
+                "severity": "High",
 
-                "title": "Excessive DHCP Discovery Requests",
+                "title": "Excessive DHCP Discover Requests",
 
                 "description": (
                     f"MAC address {mac} sent "
-                    f"{count} DHCP Discover packets. "
-                    "Possible DHCP starvation or abnormal DHCP client behavior."
+                    f"{discover_count} DHCP Discover packets "
+                    f"within {DHCP_WINDOW_SIZE} seconds. "
+                    "Possible DHCP starvation or abnormal DHCP behavior."
                 )
 
             })
+
+
+            break
 
 
     return alerts

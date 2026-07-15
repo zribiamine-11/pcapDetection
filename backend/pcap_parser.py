@@ -340,18 +340,32 @@ def build_conversation_summary(convo):
 
     # Data needed for conversation-level rules
     conversation_data = {
-        "ip_a": convo["ip_a"],
-        "ip_b": convo["ip_b"],
+    "ip_a": convo["ip_a"],
+    "ip_b": convo["ip_b"],
 
-        "handshake": {
-            "has_tcp": any_tcp,
-            "all_streams_completed": all_completed,
-            "any_stream_completed": any_completed,
-            "streams": handshake_streams,
-        },
+    "protocols_seen": sorted(
+        set(p["protocol"] for p in packets)
+    ),
 
-        "packets": packets
-    }
+    "start_time": start_ts,
+
+    "end_time": end_ts,
+
+    "duration_seconds": (
+        end_ts - start_ts
+        if start_ts is not None and end_ts is not None
+        else None
+    ),
+
+    "handshake": {
+        "has_tcp": any_tcp,
+        "all_streams_completed": all_completed,
+        "any_stream_completed": any_completed,
+        "streams": handshake_streams,
+    },
+
+    "packets": packets
+}
 
 
     # Run TCP/conversation rules

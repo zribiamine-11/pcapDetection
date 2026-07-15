@@ -2,7 +2,10 @@ from rules.tcp_rules import check_tcp_rules
 
 from rules.udp_rules import check_udp_rules
 from rules.icmp_rules import check_icmp_rules
-from rules.dns_rules import check_dns_rules
+from rules.dns_rules import (
+    check_dns_rules,
+    check_dns_window_rules
+)
 from rules.dhcp_rules import (
     check_dhcp_rules,
     check_multiple_dhcp_servers,
@@ -58,6 +61,13 @@ def analyze_conversation(conversation):
     alerts.extend(
         check_ssh_bruteforce(conversation)
     )
+    alerts.extend(
+        check_dns_window_rules(conversation)
+    )
+
+    alerts.extend(
+        check_excessive_dhcp_discover(conversation)
+    )
 
 
     return alerts
@@ -73,9 +83,7 @@ def analyze_capture(conversations):
     )
 
 
-    alerts.extend(
-        check_excessive_dhcp_discover(conversations)
-    )
+    
 
 
     return alerts
