@@ -1,7 +1,11 @@
 from rules.tcp_rules import check_tcp_rules
 
 from rules.udp_rules import check_udp_rules
-from rules.icmp_rules import check_icmp_rules
+from rules.icmp_rules import (
+    check_icmp_rules,
+    check_excessive_icmp_echo,
+    check_icmp_ping_sweep
+)
 from rules.dns_rules import (
     check_dns_rules,
     check_dns_window_rules
@@ -68,6 +72,9 @@ def analyze_conversation(conversation):
     alerts.extend(
         check_excessive_dhcp_discover(conversation)
     )
+    alerts.extend(
+        check_excessive_icmp_echo(conversation)
+        )
 
 
     return alerts
@@ -81,6 +88,10 @@ def analyze_capture(conversations):
     alerts.extend(
         check_multiple_dhcp_servers(conversations)
     )
+    
+    alerts.extend(
+        check_icmp_ping_sweep(conversations)
+        )
 
 
     

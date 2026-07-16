@@ -17,8 +17,14 @@ date: 15/07/2026
         -modify the excessive dhcp discovery from capture level to conversation level rule
  challenges: adding a window of 10s because calculing the query rate can not be for all the conversation duration and adding also this window to the excessive dhcp discovery rule 
 
+ date: 16/07/2026
+ tasks: -adding Excessive ICMP Echo Requests rule 
+        -adding  ICMP Ping Sweep Detected
+challenges: i aded a conversation level rule whish is excessive icmp echo requests rule(ICMP Ping Flood) that calculate the number of echo requests sent in 10 seconds and then i aded the icmp ping sweep detection rule (ICMP Host Discovery Scan) that is a capture level rule that calculate the number of echo requests sent by an ip to different ips in 10s
+
+
 
 rules: 
  capture level rules: Multiple DHCP Servers /
- conversation level rules : Incomplete TCP Handshake /high dns quey rate (adding window per 10s)/ Excessive DHCP Discovery
+ conversation level rules : Incomplete TCP Handshake /high dns quey rate (adding window per 10s)/ Excessive DHCP Discovery/Excessive ICMP Echo Requests
  packet level rules: port-default rules
