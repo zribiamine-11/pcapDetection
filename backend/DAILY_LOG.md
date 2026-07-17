@@ -22,9 +22,14 @@ date: 15/07/2026
         -adding  ICMP Ping Sweep Detected
 challenges: i aded a conversation level rule whish is excessive icmp echo requests rule(ICMP Ping Flood) that calculate the number of echo requests sent in 10 seconds and then i aded the icmp ping sweep detection rule (ICMP Host Discovery Scan) that is a capture level rule that calculate the number of echo requests sent by an ip to different ips in 10s
 
+date: 17/07/2026
+tasks: -adding the HTTP Request Flood rule
+        -adding the http Suspicious User-Agent rule
+next tasks: adding the https rules 
+
 
 
 rules: 
- capture level rules: Multiple DHCP Servers /
- conversation level rules : Incomplete TCP Handshake /high dns quey rate (adding window per 10s)/ Excessive DHCP Discovery/Excessive ICMP Echo Requests
- packet level rules: port-default rules
+ capture level rules: Multiple DHCP Servers / ICMP Host Discovery Scan
+ conversation level rules : Incomplete TCP Handshake /high dns quey rate (adding window per 10s)/ Excessive DHCP Discovery/Excessive ICMP Echo Requests/ HTTP Request Flood
+ packet level rules: port-default rules/ http Suspicious User-Agent

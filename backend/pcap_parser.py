@@ -42,6 +42,8 @@ def extract_packets(filepath):
         "-e", "eth.dst",
         "-e", "bootp.option.dhcp",
         "-e", "icmp.type",
+        "-e", "http.request.method",
+        "-e", "http.user_agent"
     ]
 
     result = subprocess.run(
@@ -59,7 +61,7 @@ def extract_packets(filepath):
 
     lines = result.stdout.strip().split("\n")
 
-    NUM_FIELDS = 15
+    NUM_FIELDS = 17
 
 
     def flag_to_bool(flags, bit):
@@ -108,7 +110,9 @@ def extract_packets(filepath):
             src_mac,
             dst_mac,
             dhcp_type,
-            icmp_type
+            icmp_type,
+            http_request_method,
+            http_user_agent
 
         ) = fields[:NUM_FIELDS]
 
@@ -149,6 +153,9 @@ def extract_packets(filepath):
         ),
         "dhcp_type": dhcp_type,
         "icmp_type": icmp_type,
+        "http_request_method": http_request_method,
+        "http_user_agent": http_user_agent,
+        
 
         "tcp_syn": flag_to_bool(tcp_flags, 0x02),
         "tcp_ack": flag_to_bool(tcp_flags, 0x10),

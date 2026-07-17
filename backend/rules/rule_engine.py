@@ -15,7 +15,11 @@ from rules.dhcp_rules import (
     check_multiple_dhcp_servers,
     check_excessive_dhcp_discover
 )
-from rules.http_rules import check_http_rules
+from rules.http_rules import (
+    check_http_rules,
+    check_http_window_rules,
+    check_http_user_agent_rule
+)
 from rules.https_rules import check_https_rules
 from rules.ftp_rules import check_ftp_rules
 from rules.ssh_rules import (
@@ -40,6 +44,7 @@ def analyze_packet(packet):
     alerts.extend(check_dns_rules(packet))
     alerts.extend(check_dhcp_rules(packet))
     alerts.extend(check_http_rules(packet))
+    alerts.extend(check_http_user_agent_rule(packet))
     alerts.extend(check_https_rules(packet))
     alerts.extend(check_ftp_rules(packet))
     alerts.extend(check_ssh_rules(packet))
@@ -75,6 +80,9 @@ def analyze_conversation(conversation):
     alerts.extend(
         check_excessive_icmp_echo(conversation)
         )
+    alerts.extend(
+        check_http_window_rules(conversation)
+    )
 
 
     return alerts
