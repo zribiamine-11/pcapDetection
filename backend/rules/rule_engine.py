@@ -20,7 +20,10 @@ from rules.http_rules import (
     check_http_window_rules,
     check_http_user_agent_rule
 )
-from rules.https_rules import check_https_rules
+from rules.https_rules import (
+    check_https_rules,
+    check_tls_connection_rate
+)
 from rules.ftp_rules import check_ftp_rules
 from rules.ssh_rules import (
     check_ssh_rules,
@@ -83,6 +86,10 @@ def analyze_conversation(conversation):
     alerts.extend(
         check_http_window_rules(conversation)
     )
+    alerts.extend(
+        check_tls_connection_rate(conversation)
+    )
+
 
 
     return alerts

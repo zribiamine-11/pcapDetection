@@ -25,11 +25,12 @@ challenges: i aded a conversation level rule whish is excessive icmp echo reques
 date: 17/07/2026
 tasks: -adding the HTTP Request Flood rule
         -adding the http Suspicious User-Agent rule
+        -adding the https flood tls hello packet(connection)
 next tasks: adding the https rules 
 
 
 
 rules: 
  capture level rules: Multiple DHCP Servers / ICMP Host Discovery Scan
- conversation level rules : Incomplete TCP Handshake /high dns quey rate (adding window per 10s)/ Excessive DHCP Discovery/Excessive ICMP Echo Requests/ HTTP Request Flood
+ conversation level rules : Incomplete TCP Handshake /high dns quey rate (adding window per 10s)/ Excessive DHCP Discovery/Excessive ICMP Echo Requests/ HTTP Request Flood/ https tls connections flood
  packet level rules: port-default rules/ http Suspicious User-Agent

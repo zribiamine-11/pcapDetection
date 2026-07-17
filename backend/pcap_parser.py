@@ -43,7 +43,8 @@ def extract_packets(filepath):
         "-e", "bootp.option.dhcp",
         "-e", "icmp.type",
         "-e", "http.request.method",
-        "-e", "http.user_agent"
+        "-e", "http.user_agent",
+        "-e", "tls.handshake.type"
     ]
 
     result = subprocess.run(
@@ -61,7 +62,7 @@ def extract_packets(filepath):
 
     lines = result.stdout.strip().split("\n")
 
-    NUM_FIELDS = 17
+    NUM_FIELDS = 18
 
 
     def flag_to_bool(flags, bit):
@@ -112,7 +113,8 @@ def extract_packets(filepath):
             dhcp_type,
             icmp_type,
             http_request_method,
-            http_user_agent
+            http_user_agent,
+            tls_handshake_type
 
         ) = fields[:NUM_FIELDS]
 
@@ -155,6 +157,7 @@ def extract_packets(filepath):
         "icmp_type": icmp_type,
         "http_request_method": http_request_method,
         "http_user_agent": http_user_agent,
+        "tls_handshake_type": tls_handshake_type,
         
 
         "tcp_syn": flag_to_bool(tcp_flags, 0x02),
