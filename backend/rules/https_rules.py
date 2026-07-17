@@ -33,8 +33,11 @@ def check_tls_connection_rate(conversation):
 
     alerts = []
 
-    # Ignore non TLS conversations
-    if "TLS" not in conversation["protocols_seen"]:
+    # Ignore non HTTPS/TLS conversations
+    if not any(
+        "HTTPS" in protocol or "TLS" in protocol
+        for protocol in conversation["protocols_seen"]
+    ):
         return alerts
 
 
@@ -52,14 +55,13 @@ def check_tls_connection_rate(conversation):
         return alerts
 
 
-    # Sliding window
+    # Sliding window detection
     for i in range(len(tls_handshakes)):
 
         window_start = tls_handshakes[i]["timestamp"]
 
         window_end = (
-            window_start 
-            + TLS_WINDOW_SIZE
+            window_start + TLS_WINDOW_SIZE
         )
 
 
@@ -69,15 +71,13 @@ def check_tls_connection_rate(conversation):
         for packet in tls_handshakes:
 
             if (
-                window_start 
-                <= packet["timestamp"]
+                window_start <= packet["timestamp"]
                 <= window_end
             ):
                 connection_count += 1
 
 
         if connection_count > TLS_CONNECTION_THRESHOLD:
-
 
             alerts.append({
 
@@ -88,14 +88,14 @@ def check_tls_connection_rate(conversation):
                 "title": "Excessive TLS Connections",
 
                 "description": (
-                    f"{connection_count} TLS connections detected "
-                    f"within {TLS_WINDOW_SIZE} seconds between "
+                    f"{connection_count} TLS Client Hello messages "
+                    f"were detected within "
+                    f"{TLS_WINDOW_SIZE} seconds between "
                     f"{conversation['ip_a']} and "
                     f"{conversation['ip_b']}."
                 )
 
             })
-
 
             break
 
