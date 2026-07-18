@@ -44,7 +44,8 @@ def extract_packets(filepath):
         "-e", "icmp.type",
         "-e", "http.request.method",
         "-e", "http.user_agent",
-        "-e", "tls.handshake.type"
+        "-e", "tls.handshake.type",
+       
     ]
 
     result = subprocess.run(
@@ -162,6 +163,10 @@ def extract_packets(filepath):
 
         "tcp_syn": flag_to_bool(tcp_flags, 0x02),
         "tcp_ack": flag_to_bool(tcp_flags, 0x10),
+        "tcp_fin": flag_to_bool(tcp_flags, 0x01),
+        "tcp_rst": flag_to_bool(tcp_flags, 0x04),
+        "tcp_psh": flag_to_bool(tcp_flags, 0x08),
+        "tcp_urg": flag_to_bool(tcp_flags, 0x20),
         "tcp_syn_ack": (
         flag_to_bool(tcp_flags, 0x02)
         and flag_to_bool(tcp_flags, 0x10)

@@ -1,4 +1,8 @@
-from rules.tcp_rules import check_tcp_rules
+from rules.tcp_rules import (
+    check_tcp_rules,
+    check_tcp_null_scan,
+    check_tcp_scan_rules
+)
 
 from rules.udp_rules import check_udp_rules
 from rules.icmp_rules import (
@@ -54,6 +58,7 @@ def analyze_packet(packet):
     alerts.extend(check_https_rules(packet))
     alerts.extend(check_ftp_rules(packet))
     alerts.extend(check_ssh_rules(packet))
+    alerts.extend(check_tcp_null_scan(packet))
 
 
     return alerts
@@ -94,6 +99,9 @@ def analyze_conversation(conversation):
     )
     alerts.extend(
         check_excessive_ftp_transfer(conversation)
+    )
+    alerts.extend(
+        check_tcp_scan_rules(conversation)
     )
 
 

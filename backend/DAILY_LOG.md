@@ -30,6 +30,8 @@ next tasks: adding the https rules
 
 date: 18/07/2026
 tasks: -adding the ftp large transfer rule
+        -adding the tcp null flag rule and the tcp fin and Xmas detect rules
+challenges: the tcp rules are nmap detction , the first is related to nmap -sV that does not use a flag to detect the protocols and it is a packet level flag, the fin detect is related to nmap -sF and it detecte if there is fin flag without a tcp handshake and it is a conversation rule that tchecks always the first tcp packet in every stream and check if it contains only fin , the xmas detect rule is related to nmap -sX and it has the same logic like the fin detect rule  
 
 
 rules: 
