@@ -28,9 +28,11 @@ tasks: -adding the HTTP Request Flood rule
         -adding the https flood tls hello packet(connection)
 next tasks: adding the https rules 
 
+date: 18/07/2026
+tasks: -adding the ftp large transfer rule
 
 
 rules: 
  capture level rules: Multiple DHCP Servers / ICMP Host Discovery Scan
- conversation level rules : Incomplete TCP Handshake /high dns quey rate (adding window per 10s)/ Excessive DHCP Discovery/Excessive ICMP Echo Requests/ HTTP Request Flood/ https tls connections flood
+ conversation level rules : Incomplete TCP Handshake /high dns quey rate (adding window per 10s)/ Excessive DHCP Discovery/Excessive ICMP Echo Requests/ HTTP Request Flood/ https tls connections flood/ ftp large transfer
  packet level rules: port-default rules/ http Suspicious User-Agent

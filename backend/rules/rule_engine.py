@@ -24,7 +24,10 @@ from rules.https_rules import (
     check_https_rules,
     check_tls_connection_rate
 )
-from rules.ftp_rules import check_ftp_rules
+from rules.ftp_rules import (
+    check_ftp_rules,
+    check_excessive_ftp_transfer
+)
 from rules.ssh_rules import (
     check_ssh_rules,
     check_ssh_bruteforce
@@ -88,6 +91,9 @@ def analyze_conversation(conversation):
     )
     alerts.extend(
         check_tls_connection_rate(conversation)
+    )
+    alerts.extend(
+        check_excessive_ftp_transfer(conversation)
     )
 
 
