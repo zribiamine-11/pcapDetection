@@ -34,7 +34,10 @@ tasks: -adding the ftp large transfer rule
 challenges: the tcp rules are nmap detction , the first is related to nmap -sV that does not use a flag to detect the protocols and it is a packet level flag, the fin detect is related to nmap -sF and it detecte if there is fin flag without a tcp handshake and it is a conversation rule that tchecks always the first tcp packet in every stream and check if it contains only fin , the xmas detect rule is related to nmap -sX and it has the same logic like the fin detect rule  
 
 
+date: 19/07/2026
+tasks: - adding the udp flood rule
+
 rules: 
  capture level rules: Multiple DHCP Servers / ICMP Host Discovery Scan
- conversation level rules : Incomplete TCP Handshake /high dns quey rate (adding window per 10s)/ Excessive DHCP Discovery/Excessive ICMP Echo Requests/ HTTP Request Flood/ https tls connections flood/ ftp large transfer
- packet level rules: port-default rules/ http Suspicious User-Agent
+ conversation level rules : Incomplete TCP Handshake /high dns quey rate (adding window per 10s)/ Excessive DHCP Discovery/Excessive ICMP Echo Requests/ HTTP Request Flood/ https tls connections flood/ ftp large transfer/ tcp fin detect /tsp Xmas detect
+ packet level rules: port-default rules/ http Suspicious User-Agent /tcp null scan

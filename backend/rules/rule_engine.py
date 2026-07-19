@@ -4,7 +4,7 @@ from rules.tcp_rules import (
     check_tcp_scan_rules
 )
 
-from rules.udp_rules import check_udp_rules
+from rules.udp_rules import check_udp_flood
 from rules.icmp_rules import (
     check_icmp_rules,
     check_excessive_icmp_echo,
@@ -49,7 +49,7 @@ def analyze_packet(packet):
     alerts = []
 
 
-    alerts.extend(check_udp_rules(packet))
+    
     alerts.extend(check_icmp_rules(packet))
     alerts.extend(check_dns_rules(packet))
     alerts.extend(check_dhcp_rules(packet))
@@ -102,6 +102,9 @@ def analyze_conversation(conversation):
     )
     alerts.extend(
         check_tcp_scan_rules(conversation)
+    )
+    alerts.extend(
+        check_udp_flood(conversation)
     )
 
 
