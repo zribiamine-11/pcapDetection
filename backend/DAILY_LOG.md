@@ -36,8 +36,10 @@ challenges: the tcp rules are nmap detction , the first is related to nmap -sV t
 
 date: 19/07/2026
 tasks: - adding the udp flood rule
+       - adding the udp port scan attack
+       - adding the udp oversized packets
 
 rules: 
  capture level rules: Multiple DHCP Servers / ICMP Host Discovery Scan
- conversation level rules : Incomplete TCP Handshake /high dns quey rate (adding window per 10s)/ Excessive DHCP Discovery/Excessive ICMP Echo Requests/ HTTP Request Flood/ https tls connections flood/ ftp large transfer/ tcp fin detect /tsp Xmas detect
- packet level rules: port-default rules/ http Suspicious User-Agent /tcp null scan
+ conversation level rules : Incomplete TCP Handshake /high dns quey rate (adding window per 10s)/ Excessive DHCP Discovery/Excessive ICMP Echo Requests/ HTTP Request Flood/ https tls connections flood/ ftp large transfer/ tcp fin detect /tsp Xmas detect/ udp flood / udp port scan
+ packet level rules: port-default rules/ http Suspicious User-Agent /tcp null scan /oversized packet
