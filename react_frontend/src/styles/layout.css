@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+.sidebar {
+
+    width: 220px;
+    padding: 20px;
+
+}
+
+
+.sidebar a {
+
+    display: block;
+    margin: 15px 0;
+
+    text-decoration: none;
+
+}
+
+
+.content {
+
+    flex: 1;
+    padding: 30px;
+
+}

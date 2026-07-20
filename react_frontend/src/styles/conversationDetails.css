@@ -1,0 +1,483 @@
+.conversation-page{
+
+    padding:30px;
+
+    background:#0f172a;
+
+    min-height:100vh;
+
+    color:#f8fafc;
+
+}
+
+.conversation-header{
+
+    margin-bottom:30px;
+
+}
+
+.conversation-header h1{
+
+    font-size:34px;
+
+    margin-bottom:10px;
+
+}
+
+.conversation-header p{
+
+    font-size:18px;
+
+    color:#cbd5e1;
+
+}
+
+.conversation-arrow{
+
+    margin:0 15px;
+
+    color:#38bdf8;
+
+    font-size:24px;
+
+}
+
+.conversation-card{
+
+    background:#1e293b;
+
+    padding:25px;
+
+    margin-bottom:30px;
+
+    border-radius:15px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.35);
+
+}
+
+.conversation-card h2{
+
+    margin-top:0;
+
+    margin-bottom:25px;
+
+    color:#38bdf8;
+
+}
+
+.info-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+    gap:20px;
+
+}
+
+.info-item{
+
+    background:#334155;
+
+    padding:15px;
+
+    border-radius:10px;
+
+}
+
+.info-item span{
+
+    display:block;
+
+    color:#94a3b8;
+
+    margin-bottom:8px;
+
+}
+
+.info-item strong{
+
+    color:white;
+
+}
+
+.handshake-summary{
+
+    display:flex;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:30px;
+
+}
+
+.status-card{
+
+    flex:1;
+
+    min-width:220px;
+
+    background:#334155;
+
+    padding:20px;
+
+    border-radius:10px;
+
+}
+
+.status-card span{
+
+    display:block;
+
+    color:#94a3b8;
+
+    margin-bottom:10px;
+
+}
+
+.streams-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:20px;
+
+}
+
+.stream-card{
+
+    background:#334155;
+
+    padding:20px;
+
+    border-radius:10px;
+
+}
+
+.stream-card h4{
+
+    margin-top:0;
+
+    color:#38bdf8;
+
+}
+
+.empty-alerts{
+
+    padding:20px;
+
+    background:#334155;
+
+    border-radius:10px;
+
+    color:#22c55e;
+
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+th{
+
+    background:#334155;
+
+    padding:15px;
+
+}
+
+td{
+
+    padding:15px;
+
+    border-top:1px solid #475569;
+
+}
+
+tbody tr:hover{
+
+    background:#334155;
+
+}
+/* ===========================
+   Packet Table
+=========================== */
+
+.packet-table-container{
+
+    margin-top:20px;
+
+}
+
+.table-description{
+
+    color:#94a3b8;
+
+    margin-bottom:20px;
+
+}
+
+.packet-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    overflow:hidden;
+
+    border-radius:12px;
+
+}
+
+.packet-table thead{
+
+    background:#334155;
+
+}
+
+.packet-table th{
+
+    padding:16px;
+
+    text-align:left;
+
+}
+
+.packet-table td{
+
+    padding:15px;
+
+    border-top:1px solid #475569;
+
+}
+
+.packet-row{
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.packet-row:hover{
+
+    background:#273449;
+
+}
+
+/* ===========================
+   Protocol Badges
+=========================== */
+
+.protocol-badge{
+
+    padding:5px 12px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+}
+
+.protocol-tcp{
+
+    background:#2563eb;
+
+    color:white;
+
+}
+
+.protocol-udp{
+
+    background:#059669;
+
+    color:white;
+
+}
+
+.protocol-http{
+
+    background:#ea580c;
+
+    color:white;
+
+}
+
+.protocol-https{
+
+    background:#7c3aed;
+
+    color:white;
+
+}
+
+.protocol-dns{
+
+    background:#0891b2;
+
+    color:white;
+
+}
+
+.protocol-icmp{
+
+    background:#dc2626;
+
+    color:white;
+
+}
+
+.protocol-ftp{
+
+    background:#ca8a04;
+
+    color:white;
+
+}
+
+.protocol-ssh{
+
+    background:#0f766e;
+
+    color:white;
+
+}
+
+/* ===========================
+   Alerts
+=========================== */
+
+.alert-badge{
+
+    background:#dc2626;
+
+    color:white;
+
+    padding:5px 12px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+}
+
+.no-alert{
+
+    color:#22c55e;
+
+    font-size:18px;
+
+}
+/* ===========================
+   Packet Details
+=========================== */
+
+.packet-details-card{
+
+    margin-top:40px;
+
+    background:#1e293b;
+
+    border-radius:15px;
+
+    padding:30px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.35);
+
+}
+
+.packet-details-card h2{
+
+    color:#38bdf8;
+
+    margin-bottom:25px;
+
+}
+
+.details-section{
+
+    margin-bottom:35px;
+
+}
+
+.details-section h3{
+
+    color:#38bdf8;
+
+    margin-bottom:20px;
+
+}
+
+.details-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+    gap:18px;
+
+}
+
+.detail-item{
+
+    background:#334155;
+
+    padding:15px;
+
+    border-radius:10px;
+
+}
+
+.detail-item span{
+
+    display:block;
+
+    color:#94a3b8;
+
+    margin-bottom:8px;
+
+    font-size:14px;
+
+}
+
+.detail-item strong{
+
+    color:white;
+
+    word-break:break-word;
+
+}
+
+.packet-alert-card{
+
+    background:#334155;
+
+    border-left:5px solid #ef4444;
+
+    padding:18px;
+
+    border-radius:8px;
+
+    margin-bottom:15px;
+
+}
+
+.packet-alert-card h4{
+
+    margin:0 0 10px 0;
+
+    color:#f87171;
+
+}

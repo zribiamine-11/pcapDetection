@@ -1,0 +1,346 @@
+/* ===========================
+   Alerts Page Container
+=========================== */
+
+
+.alerts-container {
+
+    padding:30px;
+
+    background:#0f172a;
+
+    min-height:100vh;
+
+    color:#f8fafc;
+
+}
+
+
+
+/* ===========================
+   Page Header
+=========================== */
+
+
+.alerts-container h1 {
+
+    font-size:34px;
+
+    margin-bottom:30px;
+
+}
+
+
+
+/* ===========================
+   Alert Sections
+=========================== */
+
+
+.alert-section {
+
+
+    background:#1e293b;
+
+
+    padding:25px;
+
+
+    margin-bottom:30px;
+
+
+    border-radius:15px;
+
+
+    border:1px solid #334155;
+
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.35);
+
+
+}
+
+
+
+/* Section title */
+
+
+.alert-section h2 {
+
+
+    color:#38bdf8;
+
+
+    margin-bottom:20px;
+
+
+    font-size:22px;
+
+
+}
+
+
+
+/* ===========================
+   Table Container
+=========================== */
+
+
+.alert-table-container {
+
+
+    width:100%;
+
+
+}
+
+
+
+/* ===========================
+   Alerts Table
+=========================== */
+
+
+.alert-table {
+
+
+    width:100%;
+
+
+    border-collapse:collapse;
+
+
+    overflow:hidden;
+
+
+    border-radius:10px;
+
+
+}
+
+
+
+.alert-table thead {
+
+
+    background:#334155;
+
+
+}
+
+
+
+.alert-table th {
+
+
+    padding:15px;
+
+
+    text-align:left;
+
+
+    color:#f8fafc;
+
+
+    font-size:14px;
+
+
+}
+
+
+
+.alert-table td {
+
+
+    padding:15px;
+
+
+    border-top:1px solid #475569;
+
+
+    color:#e2e8f0;
+
+
+    vertical-align:top;
+
+
+}
+
+
+
+.alert-table tbody tr {
+
+
+    transition:0.2s;
+
+
+}
+
+
+
+.alert-table tbody tr:hover {
+
+
+    background:#273449;
+
+
+}
+
+
+
+/* ===========================
+   Severity Badges
+=========================== */
+
+
+.severity {
+
+
+    display:inline-block;
+
+
+    padding:6px 14px;
+
+
+    border-radius:20px;
+
+
+    font-size:13px;
+
+
+    font-weight:bold;
+
+
+}
+
+
+
+/* High */
+
+
+.severity-high {
+
+
+    background:#dc2626;
+
+
+    color:white;
+
+
+}
+
+
+
+/* Medium */
+
+
+.severity-medium {
+
+
+    background:#f59e0b;
+
+
+    color:white;
+
+
+}
+
+
+
+/* Low */
+
+
+.severity-low {
+
+
+    background:#2563eb;
+
+
+    color:white;
+
+
+}
+
+
+
+/* ===========================
+   Rule ID
+=========================== */
+
+
+.rule-id {
+
+
+    display:inline-block;
+
+
+    background:#334155;
+
+
+    color:#38bdf8;
+
+
+    padding:6px 12px;
+
+
+    border-radius:8px;
+
+
+    font-weight:bold;
+
+
+    font-size:13px;
+
+
+}
+
+
+
+/* ===========================
+   Description
+=========================== */
+
+
+.alert-description {
+
+
+    max-width:500px;
+
+
+    color:#cbd5e1;
+
+
+    line-height:1.5;
+
+
+}
+
+
+
+/* ===========================
+   Empty Alerts
+=========================== */
+
+
+.no-alerts {
+
+
+    padding:18px;
+
+
+    background:#334155;
+
+
+    border-left:5px solid #22c55e;
+
+
+    border-radius:10px;
+
+
+    color:#e2e8f0;
+
+
+    font-size:16px;
+
+
+}

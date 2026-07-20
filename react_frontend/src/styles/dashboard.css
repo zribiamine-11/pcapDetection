@@ -1,0 +1,271 @@
+/* ================================
+   DASHBOARD
+================================ */
+
+.dashboard-container{
+
+    min-height:100vh;
+
+    padding:30px;
+
+    background:#0f172a;
+
+    color:#f8fafc;
+
+}
+
+
+
+/* ================================
+   PAGE TITLE
+================================ */
+
+.dashboard-container h1{
+
+    font-size:34px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+    color:#ffffff;
+
+}
+
+
+
+.dashboard-container h2{
+
+    font-size:22px;
+
+    margin-top:40px;
+
+    margin-bottom:20px;
+
+    color:#e2e8f0;
+
+}
+
+
+
+/* ================================
+   SUMMARY CARDS
+================================ */
+
+.dashboard-cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:25px;
+
+    margin-top:30px;
+
+}
+
+
+
+/* ================================
+   CARD
+================================ */
+
+.card{
+
+    background:#1e293b;
+
+    border:none;
+
+    border-radius:15px;
+
+    padding:25px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.35);
+
+    transition:.3s;
+
+    cursor:pointer;
+
+}
+
+
+
+.card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 12px 28px rgba(0,0,0,.45);
+
+}
+
+
+
+/* ================================
+   CARD TITLE
+================================ */
+
+.card h3{
+
+    margin:0;
+
+    color:#94a3b8;
+
+    font-size:18px;
+
+    font-weight:600;
+
+}
+
+
+
+/* ================================
+   CARD VALUE
+================================ */
+
+.card p{
+
+    margin-top:20px;
+
+    font-size:42px;
+
+    font-weight:bold;
+
+    color:#38bdf8;
+
+}
+
+
+
+/* ================================
+   TABLES
+================================ */
+
+table{
+
+    width:100%;
+
+    margin-top:20px;
+
+    border-collapse:collapse;
+
+    background:#1e293b;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+}
+
+
+
+thead{
+
+    background:#334155;
+
+}
+
+
+
+th{
+
+    padding:15px;
+
+    text-align:left;
+
+    color:white;
+
+    font-size:15px;
+
+}
+
+
+
+td{
+
+    padding:15px;
+
+    border-top:1px solid #475569;
+
+    color:#e2e8f0;
+
+}
+
+
+
+tbody tr{
+
+    transition:.2s;
+
+}
+
+
+
+tbody tr:hover{
+
+    background:#334155;
+
+}
+
+
+
+/* ================================
+   BUTTONS
+================================ */
+
+button{
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 22px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    font-weight:bold;
+
+}
+
+
+
+button:hover{
+
+    background:#1d4ed8;
+
+}
+
+
+
+/* ================================
+   FILE INPUT
+================================ */
+
+input[type="file"]{
+
+    color:white;
+
+    margin-bottom:15px;
+
+}
+
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media(max-width:768px){
+
+    .dashboard-container{
+
+        padding:15px;
+
+    }
+
+}
